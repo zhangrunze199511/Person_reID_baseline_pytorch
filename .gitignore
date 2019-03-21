@@ -2,6 +2,7 @@
 outputs/
 models/
 logs/
+results/
 __pycache__/
 core
 
@@ -14,6 +15,8 @@ core
 *.o
 *.so
 *.pyc
+*.log
+*.csv
 
 # Packages #
 ############
