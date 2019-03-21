@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71dd9f32-d62a-4a89-b850-bc3851c6841e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/evaluate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/evaluate_gpu.py" beforeDir="false" afterPath="$PROJECT_DIR$/evaluate_gpu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PCB/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/PCB/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PCB/opts.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/model/PCB/opts.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PCB/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/PCB/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ft_ResNet50/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/ft_ResNet50/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ft_ResNet50/opts.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/model/ft_ResNet50/opts.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ft_ResNet50/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/ft_ResNet50/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prepare.py" beforeDir="false" afterPath="$PROJECT_DIR$/prepare.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tutorial/Answers_to_Quick_Questions.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PCB/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/model/PCB/result.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/running.log" beforeDir="false" afterPath="$PROJECT_DIR$/running.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutorial/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/tutorial/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -56,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="628">
-              <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+            <state relative-caret-position="516">
+              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -92,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="144" column="38" lean-forward="true" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
+            <state relative-caret-position="418">
+              <caret line="67" column="19" lean-forward="true" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
               <folding>
                 <element signature="e#25#72#0" expanded="true" />
               </folding>
@@ -140,11 +132,11 @@
       <list>
         <option value="$PROJECT_DIR$/prepare.py" />
         <option value="$PROJECT_DIR$/evaluate.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/evaluate_gpu.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
@@ -348,7 +340,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="11" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946582" visible="true" weight="0.15795328" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946582" visible="true" weight="0.189099" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="right" id="Remote Host" order="3" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1444563" />
@@ -595,16 +587,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="144" column="38" lean-forward="true" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="38" />
-          <folding>
-            <element signature="e#25#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -647,10 +629,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+        <state relative-caret-position="516">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="67" column="19" lean-forward="true" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
+          <folding>
+            <element signature="e#25#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
