@@ -56,52 +56,55 @@ def compute_mAP(index, good_index, junk_index):
     return ap, cmc
 
 ######################################################################
-result = scipy.io.loadmat('pytorch_result.mat')
-query_feature = result['query_f']
-query_cam = result['query_cam'][0]
-query_label = result['query_label'][0]
-gallery_feature = result['gallery_f']
-gallery_cam = result['gallery_cam'][0]
-gallery_label = result['gallery_label'][0]
 
-multi = os.path.isfile('multi_query.mat')
+def eva():
+    result = scipy.io.loadmat('pytorch_result.mat')
+    query_feature = result['query_f']
+    query_cam = result['query_cam'][0]
+    query_label = result['query_label'][0]
+    gallery_feature = result['gallery_f']
+    gallery_cam = result['gallery_cam'][0]
+    gallery_label = result['gallery_label'][0]
 
-if multi:
-    m_result = scipy.io.loadmat('multi_query.mat')
-    mquery_feature = m_result['mquery_f']
-    mquery_cam = m_result['mquery_cam'][0]
-    mquery_label = m_result['mquery_label'][0]
-    
-CMC = torch.IntTensor(len(gallery_label)).zero_()
-ap = 0.0
-#print(query_label)
-for i in range(len(query_label)):
-    ap_tmp, CMC_tmp = evaluate(query_feature[i],query_label[i],query_cam[i],gallery_feature,gallery_label,gallery_cam)
-    if CMC_tmp[0]==-1:
-        continue
-    CMC = CMC + CMC_tmp
-    ap += ap_tmp
-    print(i, CMC_tmp[0])
+    multi = os.path.isfile('multi_query.mat')
 
-CMC = CMC.float()
-CMC = CMC/len(query_label) #average CMC
-print('Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    if multi:
+        m_result = scipy.io.loadmat('multi_query.mat')
+        mquery_feature = m_result['mquery_f']
+        mquery_cam = m_result['mquery_cam'][0]
+        mquery_label = m_result['mquery_label'][0]
 
-# multiple-query
-CMC = torch.IntTensor(len(gallery_label)).zero_()
-ap = 0.0
-if multi:
+    CMC = torch.IntTensor(len(gallery_label)).zero_()
+    ap = 0.0
+    # print(query_label)
     for i in range(len(query_label)):
-        mquery_index1 = np.argwhere(mquery_label==query_label[i])
-        mquery_index2 = np.argwhere(mquery_cam==query_cam[i])
-        mquery_index =  np.intersect1d(mquery_index1, mquery_index2)
-        mq = np.mean(mquery_feature[mquery_index,:], axis=0)
-        ap_tmp, CMC_tmp = evaluate(mq,query_label[i],query_cam[i],gallery_feature,gallery_label,gallery_cam)
-        if CMC_tmp[0]==-1:
+        ap_tmp, CMC_tmp = evaluate(query_feature[i], query_label[i], query_cam[i], gallery_feature, gallery_label,
+                                   gallery_cam)
+        if CMC_tmp[0] == -1:
             continue
         CMC = CMC + CMC_tmp
         ap += ap_tmp
-        #print(i, CMC_tmp[0])
+        print(i, CMC_tmp[0])
+
     CMC = CMC.float()
-    CMC = CMC/len(query_label) #average CMC
-    print('multi Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    CMC = CMC / len(query_label)  # average CMC
+    print('Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+
+    # multiple-query
+    CMC = torch.IntTensor(len(gallery_label)).zero_()
+    ap = 0.0
+    if multi:
+        for i in range(len(query_label)):
+            mquery_index1 = np.argwhere(mquery_label == query_label[i])
+            mquery_index2 = np.argwhere(mquery_cam == query_cam[i])
+            mquery_index = np.intersect1d(mquery_index1, mquery_index2)
+            mq = np.mean(mquery_feature[mquery_index, :], axis=0)
+            ap_tmp, CMC_tmp = evaluate(mq, query_label[i], query_cam[i], gallery_feature, gallery_label, gallery_cam)
+            if CMC_tmp[0] == -1:
+                continue
+            CMC = CMC + CMC_tmp
+            ap += ap_tmp
+            # print(i, CMC_tmp[0])
+        CMC = CMC.float()
+        CMC = CMC / len(query_label)  # average CMC
+        print('multi Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))

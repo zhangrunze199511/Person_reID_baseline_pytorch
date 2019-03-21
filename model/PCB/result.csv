@@ -1,0 +1,2 @@
+epoch,trainLoss,trainError,valLoss,valError
+3,0.02611518017718378,1.0,0.42366806009955477,1.0
