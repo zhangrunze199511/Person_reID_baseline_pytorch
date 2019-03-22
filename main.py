@@ -34,9 +34,10 @@ parser.add_argument('--multi', action='store_true', help='use multiple query' )
 
 opt = parser.parse_args()
 
-def generateResult(name, fp16, PCB):
+def generateResult(name, fp16, PCB, batchSize):
     opt.name = name
     opt.fp16 = fp16
+    opt.batchsize = batchSize
     opt.PCB = PCB
 
     print(opt)
@@ -51,11 +52,11 @@ def generateResult(name, fp16, PCB):
 
 if  __name__ == "__main__":
     logging.basicConfig(filename="running.log", level=logging.DEBUG, format='%(asctime)s %(message)s')
-    generateResult(name='PCB', fp16= False, PCB= True)
+    generateResult(name='PCB', fp16= False, PCB= True, batchSize=16)
 
-    generateResult(name='ft_ResNet50', fp16= False, PCB= True)
+    generateResult(name='ft_ResNet50', fp16= False, PCB= True, batchSize=16)
 
-    generateResult(name='ft_net_dense', fp16= False, PCB= False)
+    generateResult(name='ft_net_dense', fp16= False, PCB= False,batchSize=16)
 
 
 

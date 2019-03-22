@@ -1,5 +1,5 @@
 PCB: true
-batchsize: 32
+batchsize: 16
 color_jitter: false
 data_dir: E:/workplace/data/Market-1501-v15.09.15/pytorch
 droprate: 0.5

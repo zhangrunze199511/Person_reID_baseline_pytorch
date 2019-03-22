@@ -11,8 +11,14 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 import torch.backends.cudnn as cudnn
 import matplotlib
+import logging
+import csv
+import numpy as np
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
+from tqdm import tqdm
+
+
 #from PIL import Image
 import time
 import os
@@ -105,7 +111,7 @@ def train(opt):
         transform_train_list = [transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1,
                                                        hue=0)] + transform_train_list
 
-    print(transform_train_list)
+    # print(transform_train_list)
     data_transforms = {
         'train': transforms.Compose(transform_train_list),
         'val': transforms.Compose(transform_val_list),
@@ -130,9 +136,9 @@ def train(opt):
 
     use_gpu = torch.cuda.is_available()
 
-    since = time.time()
-    inputs, classes = next(iter(dataloaders['train']))
-    print('time used for loading data: %ds' %(time.time() - since))
+    #since = time.time()
+    #inputs, classes = next(iter(dataloaders['train']))
+    #print('time used for loading data: %ds' %(time.time() - since))
 
     ######################################################################
     # Training the model
@@ -162,8 +168,8 @@ def train(opt):
 
         for epoch in range(num_epochs):
             print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-            print('-' * 10)
 
+            results = []
             # Each epoch has a training and validation phase
             for phase in ['train', 'val']:
                 if phase == 'train':
@@ -175,9 +181,12 @@ def train(opt):
                 running_loss = 0.0
                 running_corrects = 0.0
                 # Iterate over data.
-                for data in dataloaders[phase]:
+                total_size = len(dataloaders[phase].dataset.samples)
+                index = 0
+                pbar = tqdm(dataloaders[phase])
+                for inputs, labels in pbar:
                     # get the inputs
-                    inputs, labels = data
+                    index += 1
                     now_batch_size, c, h, w = inputs.shape
                     if now_batch_size < opt.batchsize:  # skip the last batch
                         continue
@@ -234,29 +243,43 @@ def train(opt):
                     else:  # for the old version like 0.3.0 and 0.3.1
                         running_loss += loss.data[0] * now_batch_size
                     running_corrects += float(torch.sum(preds == labels.data))
+                    pbar.set_description(desc='loss: {:.4f}'.format(loss.item()))
+
+
 
                 epoch_loss = running_loss / dataset_sizes[phase]
                 epoch_acc = running_corrects / dataset_sizes[phase]
 
-                print('{} Loss: {:.4f} Acc: {:.4f}'.format(
-                    phase, epoch_loss, epoch_acc))
+                print('\r\n{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+                logging.info('epoch: {}, {} Loss: {:.4f} Acc: {:.4f}'.format(epoch, phase, epoch_loss, epoch_acc))
 
                 y_loss[phase].append(epoch_loss)
                 y_err[phase].append(1.0 - epoch_acc)
                 # deep copy the model
                 if phase == 'val':
+                    results.append({
+                        'epoch':epoch,
+                        'trainLoss':y_loss['train'][-1],
+                        'trainError': y_err['train'][-1],
+                        'valLoss': y_loss['val'][-1],
+                        'valError': y_err['val'][-1]
+                    })
+
+
                     last_model_wts = model.state_dict()
                     if epoch % 10 == 9:
                         save_network(model, epoch)
                     draw_curve(epoch)
+                    write_to_csv(results)
+
 
             time_elapsed = time.time() - since
-            print('Training complete in {:.0f}m {:.0f}s'.format(
+            print('\r\nTraining complete in {:.0f}m {:.0f}s'.format(
                 time_elapsed // 60, time_elapsed % 60))
             print()
 
         time_elapsed = time.time() - since
-        print('Training complete in {:.0f}m {:.0f}s'.format(
+        print('\r\nTraining complete in {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
         # print('Best val Acc: {:4f}'.format(best_acc))
 
@@ -283,6 +306,15 @@ def train(opt):
             ax0.legend()
             ax1.legend()
         fig.savefig(os.path.join('./model', name, 'train.jpg'))
+
+    def write_to_csv(results):
+        path = os.path.join('./model', name, 'result.csv')
+
+
+        with open(path, 'w', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=list(results[0].keys()))
+            writer.writeheader()
+            writer.writerows(results)
 
     ######################################################################
     # Save model
@@ -314,7 +346,8 @@ def train(opt):
 
     opt.nclasses = len(class_names)
 
-    print(model)
+    # print(model)
+    print('model loaded')
 
     if not opt.PCB:
         ignored_params = list(map(id, model.model.fc.parameters())) + list(map(id, model.classifier.parameters()))
