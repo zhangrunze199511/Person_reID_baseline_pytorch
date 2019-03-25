@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/DukeMTMC-reID" />
       <excludeFolder url="file://$MODULE_DIR$/Market-1501-v15.09.15" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.7.1 (sftp://zhangrunze@158.132.21.91:22/home/zhangrunze/anaconda3/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="R User Library" level="project" />
     <orderEntry type="library" name="R Skeletons" level="application" />
