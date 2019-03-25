@@ -3,6 +3,7 @@ outputs/
 models/
 logs/
 results/
+data/
 __pycache__/
 core
 

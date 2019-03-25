@@ -2,7 +2,7 @@ import os
 from shutil import copyfile
 
 # You only need to change this line to your dataset download path
-download_path = 'E:/workplace/data/Market-1501-v15.09.15'
+download_path = '../data/DukeMTMC-reID'
 
 if not os.path.isdir(download_path):
     print('please change the download_path')

@@ -1,7 +1,7 @@
 PCB: true
 batchsize: 16
 color_jitter: false
-data_dir: E:/workplace/data/Market-1501-v15.09.15/pytorch
+data_dir: ../data/DukeMTMC-reID/pytorch
 droprate: 0.5
 erasing_p: 0
 fp16: false
@@ -9,9 +9,9 @@ gpu_ids: '0'
 lr: 0.05
 multi: false
 name: ft_ResNet50
-nclasses: 751
+nclasses: 702
 stride: 2
-test_dir: E:/workplace/data/Market-1501-v15.09.15/pytorch
+test_dir: ../data/DukeMTMC-reID/pytorch
 train_all: false
 use_dense: false
 which_epoch: last
