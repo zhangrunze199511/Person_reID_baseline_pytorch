@@ -106,6 +106,7 @@ def test(opt):
 
     data_dir = test_dir
 
+
     if opt.multi:
         image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms) for x in
                           ['gallery', 'query', 'multi-query']}
@@ -249,7 +250,7 @@ def test(opt):
     # Save to Matlab for check
     result = {'gallery_f': gallery_feature.numpy(), 'gallery_label': gallery_label, 'gallery_cam': gallery_cam,
               'query_f': query_feature.numpy(), 'query_label': query_label, 'query_cam': query_cam}
-    scipy.io.savemat('pytorch_result.mat', result)
+    scipy.io.savemat('pytorch_result_%s.mat' % opt.name, result)
     if opt.multi:
         result = {'mquery_f': mquery_feature.numpy(), 'mquery_label': mquery_label, 'mquery_cam': mquery_cam}
         scipy.io.savemat('multi_query.mat', result)

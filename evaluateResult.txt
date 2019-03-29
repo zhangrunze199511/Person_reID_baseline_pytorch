@@ -1,0 +1,112 @@
+name: PCB
+2019-03-25 15:00:52
+Rank@1:0.760323
+Rank@5:0.867145
+Rank@10:0.904399 
+mAP:0.577725name: PCB
+2019-03-28 00:13:28
+Rank@1:0.514549
+Rank@5:0.687648
+Rank@10:0.753266 
+mAP:0.234857name: PCB
+2019-03-28 01:00:12
+Rank@1:0.514549
+Rank@5:0.687648
+Rank@10:0.753266 
+mAP:0.234857name: ft_ResNet50
+2019-03-28 01:10:48
+Rank@1:0.531176
+Rank@5:0.696556
+Rank@10:0.761876 
+mAP:0.242786name: ft_net_dense
+2019-03-28 01:13:35
+Rank@1:0.389252
+Rank@5:0.569774
+Rank@10:0.644893 
+mAP:0.150664name: PCB
+2019-03-28 04:23:27
+Rank@1:0.369390
+Rank@5:0.529623
+Rank@10:0.592460 
+mAP:0.200745name: ft_ResNet50
+2019-03-28 07:20:38
+Rank@1:0.362657
+Rank@5:0.508079
+Rank@10:0.570467 
+mAP:0.196630name: ft_net_dense
+2019-03-28 08:53:10
+Rank@1:0.214542
+Rank@5:0.366697
+Rank@10:0.428636 
+mAP:0.097107
+name: PCB rerank results
+2019-03-29 15:43:09
+multi Rank@1:0.439408
+Rank@5:0.548923
+Rank@10:0.605925 
+mAP:0.324931
+
+
+name: ft_ResNet50 rerank results
+2019-03-29 15:45:04
+multi Rank@1:0.437163
+Rank@5:0.535907
+Rank@10:0.595601 
+mAP:0.316137
+
+
+name: ft_net_dense rerank results
+2019-03-29 15:46:38
+multi Rank@1:0.262118
+Rank@5:0.371634
+Rank@10:0.425494 
+mAP:0.169254
+
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last

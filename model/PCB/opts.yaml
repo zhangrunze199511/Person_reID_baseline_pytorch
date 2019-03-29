@@ -1,7 +1,7 @@
 PCB: true
 batchsize: 16
 color_jitter: false
-data_dir: ../data/DukeMTMC-reID/pytorch
+data_dir: ../data/market/pytorch
 droprate: 0.5
 erasing_p: 0
 fp16: false
@@ -9,9 +9,9 @@ gpu_ids: '0'
 lr: 0.05
 multi: false
 name: PCB
-nclasses: 702
+nclasses: 751
 stride: 2
-test_dir: ../data/DukeMTMC-reID/pytorch
+test_dir: ../data/duke/pytorch
 train_all: false
 use_dense: false
 which_epoch: last

@@ -51,34 +51,44 @@ def compute_mAP(index, good_index, junk_index):
     return ap, cmc
 
 ######################################################################
-result = scipy.io.loadmat('pytorch_result.mat')
-query_feature = result['query_f']
-query_cam = result['query_cam'][0]
-query_label = result['query_label'][0]
-gallery_feature = result['gallery_f']
-gallery_cam = result['gallery_cam'][0]
-gallery_label = result['gallery_label'][0]
 
-CMC = torch.IntTensor(len(gallery_label)).zero_()
-ap = 0.0
-#re-ranking
-print('calculate initial distance')
-q_g_dist = np.dot(query_feature, np.transpose(gallery_feature))
-q_q_dist = np.dot(query_feature, np.transpose(query_feature))
-g_g_dist = np.dot(gallery_feature, np.transpose(gallery_feature))
-since = time.time()
-re_rank = re_ranking(q_g_dist, q_q_dist, g_g_dist)
-time_elapsed = time.time() - since
-print('Reranking complete in {:.0f}m {:.0f}s'.format(
-        time_elapsed // 60, time_elapsed % 60))
-for i in range(len(query_label)):
-    ap_tmp, CMC_tmp = evaluate(re_rank[i,:],query_label[i],query_cam[i],gallery_label,gallery_cam)
-    if CMC_tmp[0]==-1:
-        continue
-    CMC = CMC + CMC_tmp
-    ap += ap_tmp
-    #print(i, CMC_tmp[0])
+def eva_rerank(opt):
+    result = scipy.io.loadmat('pytorch_result_%s.mat' % opt.name)
+    query_feature = result['query_f']
+    query_cam = result['query_cam'][0]
+    query_label = result['query_label'][0]
+    gallery_feature = result['gallery_f']
+    gallery_cam = result['gallery_cam'][0]
+    gallery_label = result['gallery_label'][0]
 
-CMC = CMC.float()
-CMC = CMC/len(query_label) #average CMC
-print('top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    CMC = torch.IntTensor(len(gallery_label)).zero_()
+    ap = 0.0
+    #re-ranking
+    print('calculate initial distance')
+    q_g_dist = np.dot(query_feature, np.transpose(gallery_feature))
+    q_q_dist = np.dot(query_feature, np.transpose(query_feature))
+    g_g_dist = np.dot(gallery_feature, np.transpose(gallery_feature))
+    since = time.time()
+    re_rank = re_ranking(q_g_dist, q_q_dist, g_g_dist)
+    time_elapsed = time.time() - since
+    print('Reranking complete in {:.0f}m {:.0f}s'.format(
+            time_elapsed // 60, time_elapsed % 60))
+    for i in range(len(query_label)):
+        ap_tmp, CMC_tmp = evaluate(re_rank[i,:],query_label[i],query_cam[i],gallery_label,gallery_cam)
+        if CMC_tmp[0]==-1:
+            continue
+        CMC = CMC + CMC_tmp
+        ap += ap_tmp
+        #print(i, CMC_tmp[0])
+
+    CMC = CMC.float()
+    CMC = CMC/len(query_label) #average CMC
+    print('top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    file_name = './evaluateResult.txt'
+    with open(file_name, 'a+') as f:
+        f.write('\nname: %s rerank results\n' % opt.name)
+        f.write('train dataset: %s\n' % opt.data_dir)
+        f.write('test dataset: %s\n' % opt.test_dir)
+        f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        f.write('\nmulti Rank@1:%f\nRank@5:%f\nRank@10:%f \nmAP:%f\n\n' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+        f.close()

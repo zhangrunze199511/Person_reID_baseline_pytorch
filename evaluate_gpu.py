@@ -3,6 +3,9 @@ import torch
 import numpy as np
 #import time
 import os
+import argparse
+import time
+
 
 #######################################################################
 # Evaluate
@@ -59,8 +62,8 @@ def compute_mAP(index, good_index, junk_index):
     return ap, cmc
 
 ######################################################################
-def eva_gpu():
-    result = scipy.io.loadmat('pytorch_result.mat')
+def eva_gpu(opt):
+    result = scipy.io.loadmat('pytorch_result_%s.mat' % opt.name)
     query_feature = torch.FloatTensor(result['query_f'])
     query_cam = result['query_cam'][0]
     query_label = result['query_label'][0]
@@ -96,6 +99,15 @@ def eva_gpu():
     CMC = CMC.float()
     CMC = CMC / len(query_label)  # average CMC
     print('Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+    file_name = './evaluateResult.txt'
+    with open(file_name, 'a+') as f:
+        f.write('name: %s\n' % opt.name)
+        f.write('train dataset: %s\n' % opt.data_dir)
+        f.write('test dataset: %s\n' % opt.test_dir)
+        f.write(time.strftime("%Y-%m-%d %H:%M:%S\n", time.localtime()))
+        f.write('Rank@1:%f\nRank@5:%f\nRank@10:%f \nmAP:%f\n' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+        f.close()
+
 
     # multiple-query
     CMC = torch.IntTensor(len(gallery_label)).zero_()
@@ -115,3 +127,11 @@ def eva_gpu():
         CMC = CMC.float()
         CMC = CMC / len(query_label)  # average CMC
         print('multi Rank@1:%f Rank@5:%f Rank@10:%f mAP:%f' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+        file_name = './evaluateResult.txt'
+        with open(file_name, 'a+') as f:
+            f.write('name: %s' % opt.name)
+            f.write('train dataset: %s\n' % opt.data_dir)
+            f.write('test dataset: %s\n' % opt.test_dir)
+            f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            f.write('multi Rank@1:%f\nRank@5:%f\nRank@10:%f \nmAP:%f\n' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
+            f.close()

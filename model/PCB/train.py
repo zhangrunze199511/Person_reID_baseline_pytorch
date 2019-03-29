@@ -3,6 +3,7 @@
 from __future__ import print_function, division
 
 import argparse
+import losses
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -163,13 +164,10 @@ def train(opt):
     def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
         since = time.time()
 
-        # best_model_wts = model.state_dict()
-        # best_acc = 0.0
-
+        results = []
         for epoch in range(num_epochs):
             print('Epoch {}/{}'.format(epoch, num_epochs - 1))
 
-            results = []
             # Each epoch has a training and validation phase
             for phase in ['train', 'val']:
                 if phase == 'train':
@@ -180,13 +178,11 @@ def train(opt):
 
                 running_loss = 0.0
                 running_corrects = 0.0
+
                 # Iterate over data.
-                total_size = len(dataloaders[phase].dataset.samples)
-                index = 0
                 pbar = tqdm(dataloaders[phase])
                 for inputs, labels in pbar:
                     # get the inputs
-                    index += 1
                     now_batch_size, c, h, w = inputs.shape
                     if now_batch_size < opt.batchsize:  # skip the last batch
                         continue
@@ -346,7 +342,7 @@ def train(opt):
 
     opt.nclasses = len(class_names)
 
-    # print(model)
+    print(model)
     print('model loaded')
 
     if not opt.PCB:
@@ -409,7 +405,7 @@ def train(opt):
         # optimizer_ft = FP16_Optimizer(optimizer_ft, static_loss_scale = 128.0)
         model, optimizer_ft = amp.initialize(model, optimizer_ft, opt_level="O1")
 
-    criterion = nn.CrossEntropyLoss()
+    criterion = losses.DualLoss()
 
     model = train_model(model, criterion, optimizer_ft, exp_lr_scheduler,
                         num_epochs=60)

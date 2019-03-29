@@ -166,10 +166,11 @@ def train(opt):
         # best_model_wts = model.state_dict()
         # best_acc = 0.0
 
+        results = []
         for epoch in range(num_epochs):
             print('Epoch {}/{}'.format(epoch, num_epochs - 1))
 
-            results = []
+
             # Each epoch has a training and validation phase
             for phase in ['train', 'val']:
                 if phase == 'train':
@@ -346,7 +347,7 @@ def train(opt):
 
     opt.nclasses = len(class_names)
 
-    # print(model)
+    print(model)
     print('model loaded')
 
     if not opt.PCB:
