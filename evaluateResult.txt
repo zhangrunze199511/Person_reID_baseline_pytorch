@@ -110,3 +110,132 @@ test_dir: ../data/duke/pytorch
 train_all: false
 use_dense: false
 which_epoch: last
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last
+name: PCB
+train dataset: ../data/duke/pytorch
+test dataset: ../data/market/pytorch
+2019-03-30 09:25:20
+Rank@1:0.483076
+Rank@5:0.654394
+Rank@10:0.722387 
+mAP:0.214889
+
+name: PCB rerank results
+train dataset: ../data/duke/pytorch
+test dataset: ../data/market/pytorch
+2019-03-30 09:28:21
+multi Rank@1:0.517518
+Rank@5:0.628563
+Rank@10:0.679038 
+mAP:0.317569
+
+name: PCB
+train dataset: ../data/duke/pytorch
+test dataset: ../data/duke/pytorch
+2019-03-30 09:36:33
+Rank@1:0.764812
+Rank@5:0.873429
+Rank@10:0.903950 
+mAP:0.594351
+
+name: PCB rerank results
+train dataset: ../data/duke/pytorch
+test dataset: ../data/duke/pytorch
+2019-03-30 09:38:22
+multi Rank@1:0.819120
+Rank@5:0.882406
+Rank@10:0.913375 
+mAP:0.765811
+
+name: ft_ResNet50
+train dataset: ../data/duke/pytorch
+test dataset: ../data/market/pytorch
+2019-03-30 17:48:11
+Rank@1:0.501781
+Rank@5:0.673397
+Rank@10:0.739311 
+mAP:0.224590
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last
+PCB: true
+batchsize: 32
+color_jitter: false
+data_dir: ../data/market/pytorch
+droprate: 0.5
+erasing_p: 0
+fp16: false
+gpu_ids: '0'
+lr: 0.05
+multi: false
+name: PCB
+stride: 2
+test_dir: ../data/duke/pytorch
+train_all: false
+use_dense: false
+which_epoch: last
+
+name: ft_ResNet50
+train dataset: ../data/duke/pytorch
+test dataset: ../data/market/pytorch
+2019-03-30 20:07:46
+Rank@1:0.501781
+Rank@5:0.673397
+Rank@10:0.739311 
+mAP:0.224590
+
+name: ft_ResNet50 rerank results
+train dataset: ../data/duke/pytorch
+test dataset: ../data/market/pytorch
+2019-03-30 20:10:57
+multi Rank@1:0.538302
+Rank@5:0.638064
+Rank@10:0.693290 
+mAP:0.337766
+
+name: ft_ResNet50
+train dataset: ../data/duke/pytorch
+test dataset: ../data/duke/pytorch
+2019-03-30 20:19:00
+Rank@1:0.781418
+Rank@5:0.880162
+Rank@10:0.912478 
+mAP:0.618001
+
+name: ft_ResNet50 rerank results
+train dataset: ../data/duke/pytorch
+test dataset: ../data/duke/pytorch
+2019-03-30 20:20:58
+multi Rank@1:0.840664
+Rank@5:0.893627
+Rank@10:0.918761 
+mAP:0.787526
+

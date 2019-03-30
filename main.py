@@ -7,6 +7,7 @@ import argparse
 import yaml
 
 import logging
+import csv
 
 
 try:
@@ -38,6 +39,7 @@ parser.add_argument('--multi', action='store_true', help='use multiple query' )
 
 
 opt = parser.parse_args()
+csvResults = []
 
 def generateResult(name, fp16, PCB, batchSize, train_dir, test_dir):
     opt.name = name
@@ -48,7 +50,7 @@ def generateResult(name, fp16, PCB, batchSize, train_dir, test_dir):
     print(opt)
 
     print("training start")
-    train(opt=opt)
+    # train(opt=opt)
     print("training finish")
 
     opt.test_dir = test_dir
@@ -57,8 +59,9 @@ def generateResult(name, fp16, PCB, batchSize, train_dir, test_dir):
         print("extracting features")
         test(opt)
         print("feature extracted, calculating results")
-        eva_gpu(opt)
-        eva_rerank(opt)
+        csvResults.append(eva_gpu(opt))
+        csvResults.append(eva_rerank(opt))
+
 
 if  __name__ == "__main__":
     logging.basicConfig(filename="running.log", level=logging.DEBUG, format='%(asctime)s %(message)s')
@@ -68,11 +71,16 @@ if  __name__ == "__main__":
         yaml.dump(vars(opt), fp, default_flow_style=False)
 
 
-    generateResult(name='PCB', fp16= False, PCB= True, batchSize=16, train_dir=MARKET_DIR, test_dir= [MARKET_DIR, DUKE_DIR])
-
-    generateResult(name='ft_ResNet50', fp16= False, PCB= True, batchSize=16, train_dir=MARKET_DIR, test_dir = [MARKET_DIR, DUKE_DIR])
-
-    generateResult(name='ft_net_dense', fp16= False, PCB= False,batchSize=16, train_dir=MARKET_DIR, test_dir = [MARKET_DIR, DUKE_DIR])
 
 
+    generateResult(name='PCB', fp16= False, PCB= True, batchSize=16, train_dir=DUKE_DIR, test_dir= [MARKET_DIR, DUKE_DIR])
 
+    generateResult(name='ft_ResNet50', fp16= False, PCB= True, batchSize=16, train_dir=DUKE_DIR, test_dir = [MARKET_DIR, DUKE_DIR])
+
+    generateResult(name='ft_net_dense', fp16= False, PCB= False,batchSize=16, train_dir=DUKE_DIR, test_dir = [MARKET_DIR, DUKE_DIR])
+
+
+    with open('EvaluateResult.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=list(csvResults[0].keys()))
+        writer.writeheader()
+        writer.writerows(csvResults)

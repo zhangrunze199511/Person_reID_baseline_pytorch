@@ -12,5 +12,5 @@ class DualLoss(nn.Module):
         self.htril = TripletLoss()
 
     def forward(self,input, target):
-        return self.xentl(input, target) + self.htril(input, target)
-
+        #return self.xentl(input, target) + self.htril(input, target)
+        return self.htril(input, target)

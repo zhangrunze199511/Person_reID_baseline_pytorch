@@ -108,6 +108,17 @@ def eva_gpu(opt):
         f.write('Rank@1:%f\nRank@5:%f\nRank@10:%f \nmAP:%f\n' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
         f.close()
 
+    csvObj = {'model': opt.name,
+              'train_dataset':opt.data_dir,
+              'test_dataset': opt.test_dir,
+              'rank 1': CMC[0],
+              'rank 5': CMC[4],
+              'rank 10': CMC[9],
+              'mAP': ap / len(query_label),
+              'rerank?': False
+              }
+
+
 
     # multiple-query
     CMC = torch.IntTensor(len(gallery_label)).zero_()
@@ -135,3 +146,5 @@ def eva_gpu(opt):
             f.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
             f.write('multi Rank@1:%f\nRank@5:%f\nRank@10:%f \nmAP:%f\n' % (CMC[0], CMC[4], CMC[9], ap / len(query_label)))
             f.close()
+
+    return csvObj
